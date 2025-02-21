@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
+import { View, Platform } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
@@ -14,10 +14,27 @@ export default function TabLayout() {
 	return (
 		<Tabs
 			screenOptions={{
-				tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+				tabBarActiveTintColor: Colors.black,
+
+				tabBarInactiveTintColor: Colors.gray,
 				headerShown: false,
 				tabBarButton: HapticTab,
-				tabBarBackground: TabBarBackground,
+				tabBarBackground: () => {
+					return (
+						<View
+							style={{
+								position: 'absolute',
+								bottom: 0,
+								right: 0,
+								left: 0,
+								height: '50%',
+								backgroundColor: Colors.offWhite,
+							}}
+						/>
+					);
+				},
+				tabBarActiveBackgroundColor: Colors.offWhite,
+				tabBarInactiveBackgroundColor: Colors.offWhite,
 				tabBarStyle: Platform.select({
 					ios: {
 						// Use a transparent background on iOS to show the blur effect
@@ -25,24 +42,26 @@ export default function TabLayout() {
 					},
 					default: {},
 				}),
-			}}
-		>
+			}}>
 			<Tabs.Screen
 				name='index'
 				options={{
 					title: 'Home',
-					tabBarIcon: ({ color }) => (
-						<IconSymbol size={28} name='house.fill' color={color} />
-					),
+					tabBarIcon: ({ color }) => <IconSymbol size={28} name='map' color={color} />,
 				}}
 			/>
 			<Tabs.Screen
 				name='explore'
 				options={{
-					title: 'Explore',
-					tabBarIcon: ({ color }) => (
-						<IconSymbol size={28} name='paperplane.fill' color={color} />
-					),
+					title: 'Scan',
+					tabBarIcon: ({ color }) => <IconSymbol size={28} name='qrcode' color={color} />,
+				}}
+			/>
+			<Tabs.Screen
+				name='profile'
+				options={{
+					title: 'Profile',
+					tabBarIcon: ({ color }) => <IconSymbol size={28} name='person' color={color} />,
 				}}
 			/>
 		</Tabs>
