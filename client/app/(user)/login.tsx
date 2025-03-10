@@ -44,7 +44,7 @@ export default function Login() {
 			</View>
 			<Button color='grey' title='Submit' onPress={handleSubmit} />
 			<Link href='/register'>
-				<Text>Don`&apos;`t have an account yet? Register</Text>
+				<Text>Don&apos;t have an account yet? Register</Text>
 			</Link>
 		</View>
 	);

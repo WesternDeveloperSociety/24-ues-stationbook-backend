@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import { Link, useRouter } from 'expo-router';
+import { Link } from 'expo-router';
 
 const Register = () => {
 	const [firstName, setFirstName] = useState('');
@@ -25,9 +25,6 @@ const Register = () => {
 				discipline,
 				password,
 			});
-			const router = useRouter();
-
-			router.push('./index');
 		}
 	};
 	return (
@@ -81,6 +78,8 @@ const Register = () => {
 						{ label: 'Electrical', value: 'Electrical' },
 						{ label: 'Mechanical', value: 'Mechanical' },
 						{ label: 'Software', value: 'Software' },
+						{ label: 'Mechatronics', value: 'Mechatronics' },
+						{ label: 'Integrated', value: 'Integrated' },
 					]}
 					style={{
 						inputIOS: {
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		marginTop: 100,
 		width: 500,
-		height: 500,
+		height: 600,
 		padding: 20,
 		backgroundColor: 'white',
 	},
