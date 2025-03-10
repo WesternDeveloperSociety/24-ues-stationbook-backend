@@ -6,6 +6,7 @@ import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function TabLayout() {
 	const colorScheme = useColorScheme();
@@ -46,21 +47,27 @@ export default function TabLayout() {
 				name='index'
 				options={{
 					title: 'Home',
-					tabBarIcon: ({ color }) => <IconSymbol size={28} name='map' color={color} />,
+					tabBarIcon: ({ color }) => (
+						<MaterialCommunityIcons size={28} name='map' color={color} />
+					),
 				}}
 			/>
 			<Tabs.Screen
 				name='explore'
 				options={{
 					title: 'Scan',
-					tabBarIcon: ({ color }) => <IconSymbol size={28} name='qrcode' color={color} />,
+					tabBarIcon: ({ color }) => (
+						<MaterialCommunityIcons size={28} name='qrcode' color={color} />
+					),
 				}}
 			/>
 			<Tabs.Screen
 				name='profile'
 				options={{
 					title: 'Profile',
-					tabBarIcon: ({ color }) => <IconSymbol size={28} name='person' color={color} />,
+					tabBarIcon: ({ color }) => (
+						<MaterialCommunityIcons size={28} name='account-circle' color={color} />
+					),
 				}}
 			/>
 		</Tabs>
