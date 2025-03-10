@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+import { Link, useRouter } from 'expo-router';
 
-export default function HomeScreen() {
+const Register = () => {
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [preferredName, setPreferredName] = useState('');
@@ -12,15 +13,7 @@ export default function HomeScreen() {
 	const [password, setPassword] = useState('');
 
 	const handleSubmit = () => {
-		if (
-			!firstName ||
-			!lastName ||
-			!preferredName ||
-			!email ||
-			!studentNumber ||
-			!discipline ||
-			!password
-		) {
+		if (!firstName) {
 			Alert.alert('Error', 'Missing Field(s)');
 		} else {
 			console.log({
@@ -32,6 +25,9 @@ export default function HomeScreen() {
 				discipline,
 				password,
 			});
+			const router = useRouter();
+
+			router.push('./index');
 		}
 	};
 	return (
@@ -107,9 +103,14 @@ export default function HomeScreen() {
 				/>
 			</View>
 			<Button color='grey' title='Submit' onPress={handleSubmit} />
+			<Link href='/login'>
+				<Text>Already Have an Account? Login</Text>
+			</Link>
 		</View>
 	);
-}
+};
+export default Register;
+//export const email;
 
 const styles = StyleSheet.create({
 	container: {
