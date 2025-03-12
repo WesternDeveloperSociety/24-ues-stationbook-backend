@@ -10,8 +10,6 @@ CREATE TABLE students (
     nickname			VARCHAR(20),
     password_hash		VARCHAR(255) NOT NULL,
     points				INT(30),
-    email_verified		BOOLEAN DEFAULT false,
-    is_active 			BOOLEAN DEFAULT true,
     is_admin			BOOLEAN DEFAULT false,
     created_at			TIMESTAMP DEFAULT current_timestamp,
     updated_at			TIMESTAMP DEFAULT current_timestamp ON UPDATE current_timestamp

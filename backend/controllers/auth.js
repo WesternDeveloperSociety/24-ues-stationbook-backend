@@ -1,22 +1,24 @@
+const jwt = require("jsonwebtoken")
 const { queryDBCredentials, addDBCredentials, generateRefreshToken, generateAccessToken } = require('../helpers/auth.js');
 
-
-const test = async(req, res) => {
-    const{inputInfo} = req.body;
-    try{
-        console.log(inputInfo);
-        res.status(200).json({ message: "Hello World!" });
-    } catch (error) {
-        res.status(500).json({ message: `Internal Server Error: ${error.message}`})
-    }
-}
-
 const register = async(req, res) => {
-    const { username, password } = req.body;
-    let inDB = await queryDBCredentials(username, password)
+    const {studentID, email, fName, lName, nickname, password, isAdmin} = req.body;
+
+    let date = new Date();
+
+    let year = date.getFullYear();
+    let month = String(date.getMonth() + 1).padStart(2, '0'); 
+    let day = String(date.getDate()).padStart(2, '0');
+    let hours = String(date.getHours()).padStart(2, '0');
+    let minutes = String(date.getMinutes()).padStart(2, '0');
+    let seconds = String(date.getSeconds()).padStart(2, '0');
+    
+    let timestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+
+    let inDB = await queryDBCredentials(studentID, email)
     
     if (!inDB) {
-        await addDBCredentials(username, password);
+        await addDBCredentials(studentID, email, fName, lName, nickname, password, 0, isAdmin, timestamp);
         res.send('Your data was appended');
     }
     else{
@@ -25,13 +27,13 @@ const register = async(req, res) => {
 }
 
 const login = async(req, res) => {
-    const { username, password } = req.body;
+    const { studentID, password } = req.body;
     
-    let inDB = queryDBCredentials(username, password);
+    let inDB = queryDBCredentials(studentID, password);
 
     if (inDB) {
-        const accessToken = generateAccessToken(username);
-        const refreshToken = generateRefreshToken(username);
+        const accessToken = generateAccessToken(studentID);
+        const refreshToken = generateRefreshToken(studentID);
 
         res.cookie('refreshToken', refreshToken, { //The name of the token should be sent under 'refreshToken' in the frontend
             httpOnly: true,
@@ -46,15 +48,21 @@ const login = async(req, res) => {
 }
 
 const returnAccess = async(req, res) => {
-    const refreshToken = req.cookies.refreshToken; // Extract token from HttpOnly cookie
-    if (!refreshToken) return res.status(401).json({ message: 'No refresh token provided' });
-  
-    jwt.verify(refreshToken, 'jwtSecret', (err, user) => { //We need to define this secret as something else usually a 64 hex code or smth
-      if (err) return res.status(403).send("Invalid Refresh Token");
-  
-      const newAccessToken = generateAccessToken(user.username);
-      res.json({ accessToken: newAccessToken }); //Sending back the new access token if the refresh token is valid
-    });
+    try {
+        const refreshToken = req.cookies?.refreshToken || req.get("Cookie")?.split("refreshToken=")[1]?.split(";")[0];        
+        if (!refreshToken) return res.status(401).json({ message: 'No refresh token provided' });
+    
+        jwt.verify(refreshToken, 'jwtSecret', (err, user) => { //We need to define this secret as something else usually a 64 hex code or smth
+        if (err) return res.status(403).send("Invalid Refresh Token");
+    
+        const newAccessToken = generateAccessToken(user.username);
+        res.json({ accessToken: newAccessToken }); //Sending back the new access token if the refresh token is valid
+        });
+    } catch (err){
+        console.log(err)
+        res.status(401).send("Provide a refresh token")
+    }
+
 };
 
 const verifyJWT = (req, res, next) => { //This is for authorization 
@@ -66,15 +74,17 @@ const verifyJWT = (req, res, next) => { //This is for authorization
     }
     jwt.verify(token, 'jwtSecret', (err, decoded) => {
         if (err) {
+            console.log(err)
             return res.status(403).json({ auth: false, message: "Authorization failed" });
+
         }
         req.userID = decoded.username;
+        res.status(200).send("Verified!")
         next();
     });
 };
 
 module.exports = {
-    test,
     register,
     login, 
     returnAccess, 
