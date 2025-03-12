@@ -3,14 +3,11 @@ import React from 'react';
 import { View, Platform } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+
 import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function TabLayout() {
-	const colorScheme = useColorScheme();
-
 	return (
 		<Tabs
 			screenOptions={{
@@ -42,7 +39,8 @@ export default function TabLayout() {
 					},
 					default: {},
 				}),
-			}}>
+			}}
+		>
 			<Tabs.Screen
 				name='index'
 				options={{
