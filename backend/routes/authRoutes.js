@@ -1,10 +1,8 @@
 const express = require('express');
 
-const {test, register, login, returnAccess, verifyJWT} = require('../controllers/auth')
+const {register, login, returnAccess, verifyJWT} = require('../controllers/auth')
 
 const router = express.Router();
-
-router.post('/test', test);
 
 router.post('/register', register);
 
