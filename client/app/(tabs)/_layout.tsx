@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Platform } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
@@ -7,6 +7,12 @@ import { Colors } from '@/constants/Colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function TabLayout() {
+	const [scanning, setScanning] = useState<boolean>(true);
+
+	useEffect(() => {
+		// Check to see if the user has access to scanning featueres
+	});
+
 	return (
 		<Tabs
 			screenOptions={{
@@ -38,8 +44,7 @@ export default function TabLayout() {
 					},
 					default: {},
 				}),
-			}}
-		>
+			}}>
 			<Tabs.Screen
 				name='index'
 				options={{
@@ -64,6 +69,16 @@ export default function TabLayout() {
 					title: 'Profile',
 					tabBarIcon: ({ color }) => (
 						<MaterialCommunityIcons size={28} name='account-circle' color={color} />
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name='scanner'
+				options={{
+					href: !scanning ? null : '/scanner',
+					title: 'Scanner',
+					tabBarIcon: ({ color }) => (
+						<MaterialCommunityIcons size={28} name='camera' color={color} />
 					),
 				}}
 			/>
