@@ -1,16 +1,17 @@
 import { View, Text, Alert, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import { CameraType, CameraView, useCameraPermissions } from 'expo-camera';
+import { BarcodeScanningResult, CameraType, CameraView, useCameraPermissions } from 'expo-camera';
 
 const scanner = () => {
 	const [permission, requestPermission] = useCameraPermissions();
+	const [scanned, setScanned] = useState(false);
 
 	const isPermissionGranted = Boolean(permission?.granted ?? false);
 
 	useEffect(() => {
 		async function request() {
-			requestPermission();
+			await requestPermission();
 		}
 
 		request();
@@ -19,14 +20,20 @@ const scanner = () => {
 	return (
 		<SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 			{isPermissionGranted ? (
-				<CameraView style={{ flex: 1 }} facing={'back'}>
-					<View style={{ flex: 1 }}></View>
-				</CameraView>
+				<CameraView
+					style={StyleSheet.absoluteFillObject}
+					facing={'back'}
+					onBarcodeScanned={(data) => !scanned && scanCode(data)}></CameraView>
 			) : (
 				<TouchableOpacity style={styles.button} onPress={() => requestPermission()} />
 			)}
 		</SafeAreaView>
 	);
+
+	function scanCode(data: BarcodeScanningResult) {
+		setScanned(true);
+		console.log(data);
+	}
 };
 
 const styles = StyleSheet.create({
