@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, useWindowDimensions } from 'react-native';
+import { StyleSheet, View, Text, useWindowDimensions, SafeAreaView } from 'react-native';
 import { Colors } from '../../constants/Colors';
 import QRCode from 'react-native-qrcode-svg';
 import { useState } from 'react';
@@ -9,7 +9,7 @@ export default function TabTwoScreen() {
 	const [userId, setUserId] = useState<string | undefined>(undefined);
 
 	return (
-		<View style={{ flex: 1, backgroundColor: Colors.white }}>
+		<SafeAreaView style={{ flex: 1, backgroundColor: Colors.white }}>
 			<View style={{ height: 150, alignItems: 'center', justifyContent: 'center' }}>
 				<Text style={styles.title}>My QR Code</Text>
 			</View>
@@ -21,7 +21,7 @@ export default function TabTwoScreen() {
 					backgroundColor={Colors.white}
 				/>
 			</View>
-		</View>
+		</SafeAreaView>
 	);
 }
 
