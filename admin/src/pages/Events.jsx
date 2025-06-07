@@ -7,3 +7,5 @@ function Events() {
 }
 
 export default Events;
+
+//active events, past events, event creation, editing events
