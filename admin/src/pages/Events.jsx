@@ -1,5 +1,6 @@
 import '../App.css';
 import EventForm from '../components/eventForm';
+import AttendeeList from '../components/AttendeeList';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -12,6 +13,9 @@ function Events() {
     const [openEventId, setOpenEventId] = useState(null);
     const [editEventId, setEditEventId] = useState(null);
     const [editEventData, setEditEventData] = useState(null);
+
+    const [showAttendeeList, setShowAttendeeList] = useState(false);
+    const [attendeeList, setAttendeeList] = useState([]);
 
     const [loading, setLoading] = useState(true);
 
@@ -52,8 +56,8 @@ function Events() {
           }
     }
 
-    const toggleDetails = (eventId) => {
-        setOpenEventId(prevId => (prevId === eventId ? null : eventId));
+    const toggleDetails = (event_no) => {
+        setOpenEventId(prevId => (prevId === event_no ? null : event_no));
     };
 
     const editEvent = (event) => {
@@ -77,6 +81,22 @@ function Events() {
         }
     };
 
+    const getAttendeeList = async (event_no) => {
+        try {
+            const attendeeList = await axios.get(`${import.meta.env.VITE_API_URL}/api/scan/event-scans/${event_no}`);
+            if(attendeeList.data.length > 0){
+                setAttendeeList(attendeeList.data);
+                setShowAttendeeList(true);
+                console.log(attendeeList);
+            }
+            else {
+                alert('No attendees for this event.');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Error fetching attendee list');
+        }
+    }
 
     return (
         <>
@@ -113,7 +133,10 @@ function Events() {
                                             <p><strong>Track:</strong> {event.track || 'N/A'}</p>
                                             <p><strong>Points:</strong> {event.points ?? 'N/A'}</p>
                                             <button onClick={() => editEvent(event)}>Edit</button>
-                                            <button>View Attendee List</button>
+                                            <button onClick={() => getAttendeeList(event.event_no)}>View Attendee List</button>
+                                            {showAttendeeList && (
+                                                <AttendeeList attendeeList={attendeeList}/>
+                                            )}
                                         </div>
                                     )}
                                     
@@ -137,7 +160,10 @@ function Events() {
                                             <p><strong>Description:</strong> {event.description || 'N/A'}</p>
                                             <p><strong>Track:</strong> {event.track || 'N/A'}</p>
                                             <p><strong>Points:</strong> {event.points ?? 'N/A'}</p>
-                                            <button>View Attendee List</button>
+                                            <button onClick={() => getAttendeeList(event.event_no)}>View Attendee List</button>
+                                            {showAttendeeList && (
+                                                <AttendeeList attendeeList={attendeeList}/>
+                                            )}
                                         </div>
                                     )}
                                     </li>

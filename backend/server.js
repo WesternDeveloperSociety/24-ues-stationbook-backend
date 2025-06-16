@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const authRoutes = require('./routes/authRoutes.js');
 const eventsRoutes = require('./routes/eventsRoutes');
+const scanRoutes = require('./routes/scanRoutes.js');
 
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
@@ -14,13 +15,13 @@ app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true,
 }));
-app.use(bodyParser.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/events', eventsRoutes);
+app.use('/api/scan', scanRoutes);
 
+app.use(bodyParser.json());
 app.use(express.json()); 
-
 app.use(cookieParser()); 
 
 app.get('/', async (req, res) => { //test
