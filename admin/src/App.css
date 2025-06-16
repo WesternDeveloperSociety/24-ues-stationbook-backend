@@ -1,7 +1,108 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
+
+main {
+  width: 100%;
+  min-height: 100%;
+  display: block;
+  padding: 1rem;
+  box-sizing: inherit;
+  position: relative;
+  text-align: left;
+}
+.content {
+  display: block;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 90%;
+  height: 100%;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+}
+
+.event-columns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.column h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #48287c;
+}
+
+.upcoming {
+  display: flex;
+  flex-direction: column;
+}
+
+.past {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  padding: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #48287c;
+  color: white;
+  border-color: transparent;
+  height: fit-content;
+}
+
+button:hover {
+  background-color: #9365dd;
+}
+
+.button-space {
+  position: absolute;
+  right: 2rem;
+  display: block;
+  margin-top: 2rem;
+}
+
+ul {
+  list-style-type: none;
+  background-color: #d7c5f4;
+  padding: 1rem;
+}
+
+li {
+  background-color: white;
+  padding: 1rem;
+  margin: 0.5rem;
+}
+
+.details {
+  background-color: transparent;
+  color: #48287c;
+}
+
+.accordion-content {
+  margin-top: 0.5rem;
+  background-color: #f1ecfa;
+  padding: 0.75rem;
+  border-left: 4px solid #9365dd;
+  border-radius: 4px;
+  text-align: left;
+  margin: 0.5rem 0;
+}
+
+
 
