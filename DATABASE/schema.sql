@@ -13,7 +13,16 @@ CREATE TABLE student (
     is_admin			BOOLEAN DEFAULT false,
     created_at			TIMESTAMP DEFAULT current_timestamp,
     last_updated		TIMESTAMP DEFAULT current_timestamp ON UPDATE current_timestamp
-	);
+);
+
+CREATE TABLE conductor_access (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT(10) NOT NULL,
+    granted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES student(student_id) ON DELETE CASCADE
+);
+
     
 CREATE TABLE event (
 	event_no		INT(10) UNIQUE NOT NULL PRIMARY KEY,

@@ -78,8 +78,8 @@ const verifyJWT = (req, res, next) => { //This is for authorization
             return res.status(403).json({ auth: false, message: "Authorization failed" });
 
         }
-        req.userID = decoded.username;
-        res.status(200).send("Verified!")
+        req.userID = decoded.student_id || decoded.username;
+        //res.status(200).send("Verified!")
         next();
     });
 };
