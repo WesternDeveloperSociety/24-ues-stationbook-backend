@@ -3,9 +3,9 @@ const jwt = require('jsonwebtoken')
 
 const queryDBCredentials = async (studentID, email) => {
     try {
-        query = 'SELECT * FROM students WHERE student_id = ? or email = "?"', [studentID, email]
+        query = 'SELECT * FROM student WHERE student_id = ? or email = "?"', [studentID, email]
         const [rows] = await pool.execute(
-            'SELECT * FROM students WHERE student_id = ? or email = ?',
+            'SELECT * FROM student WHERE student_id = ? or email = ?',
             [studentID, email]
         );
         return rows.length > 0;
@@ -18,7 +18,7 @@ const queryDBCredentials = async (studentID, email) => {
 const addDBCredentials = async (studentID, email, fName, lName, nickname, password, points, isAdmin, currentDate) => {
     try {
         await pool.execute(
-            'INSERT INTO students (student_id, email, first_name, last_name, nickname, password_hash, points, is_admin, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            'INSERT INTO student (student_id, email, first_name, last_name, nickname, password_hash, points, is_admin, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [studentID, email, fName, lName, nickname, password, points, isAdmin, currentDate, currentDate]
         );
 

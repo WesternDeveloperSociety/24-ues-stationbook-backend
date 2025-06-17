@@ -1,4 +1,6 @@
 const db = require('../db');
+const { checkConductorAccess } = require('../helpers/conductor');
+const { verifyJWT } = require('../controllers/auth');
 
 exports.getEventScans = async (req, res) =>{
     const { event_no } = req.params;
@@ -32,6 +34,9 @@ exports.createScan = async (req, res) =>{
     try {
         await db.execute('INSERT INTO scan (student_id, event_no) VALUES (?,?)', [student_id, event_no]);
         res.status(201).json({ message: 'Scan recorded successfully' });
+        if (err.code === 'ER_DUP_ENTRY') {
+            return res.status(409).json({ message: 'Student already scanned for this event.' });
+        }
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "Database error: ", err });
