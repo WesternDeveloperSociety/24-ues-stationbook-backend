@@ -20,20 +20,20 @@ function Events() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchEvents = async () => {
-        try {
-            const upcomingRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/events/upcoming`);
-            const pastRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/events/past`);
-            setUpcoming(upcomingRes.data);
-            setPast(pastRes.data);
-        } catch (err) {
-            console.error('Error fetching events:', err);
-        } finally {
-            setLoading(false);
-        }
-    };
+            const fetchEvents = async () => {
+            try {
+                const upcomingRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/events/upcoming`);
+                const pastRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/events/past`);
+                setUpcoming(upcomingRes.data);
+                setPast(pastRes.data);
+            } catch (err) {
+                console.error('Error fetching events:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    fetchEvents();
+        fetchEvents();
     }, []); 
 
     const updateLists = async () => {
@@ -114,64 +114,65 @@ function Events() {
                     />
                 )}
             </div>
-            <div className='main'>
-                <div className='event-columns'>
-                        <div className='column'>
-                        <h2>Upcoming Events</h2>
-                            {upcoming.length === 0 && <p>No upcoming events.</p>}
-                            <ul>
-                                {upcoming.map(event => (
-                                    <li key={event.event_no}>
-                                    <strong>{event.name}</strong> — {new Date(event.date).toLocaleDateString()}
-                                    <button className="details" onClick={() => toggleDetails(event.event_no)}>
-                                        {openEventId === event.event_no ? 'Hide Details' : 'Details'}
-                                    </button>
-                                    
-                                    {openEventId === event.event_no && (
-                                        <div className="accordion-content">
-                                            <p><strong>Description:</strong> {event.description || 'N/A'}</p>
-                                            <p><strong>Track:</strong> {event.track || 'N/A'}</p>
-                                            <p><strong>Points:</strong> {event.points ?? 'N/A'}</p>
-                                            <button onClick={() => editEvent(event)}>Edit</button>
-                                            <button onClick={() => getAttendeeList(event.event_no)}>View Attendee List</button>
-                                            {showAttendeeList && (
-                                                <AttendeeList attendeeList={attendeeList}/>
-                                            )}
-                                        </div>
-                                    )}
-                                    
-                                    </li>
-                                ))}
-                            </ul>
-                    </div>
+        <div className='main'>
+            <h1>Events Page</h1>
+            <div className='columns-container'>
                     <div className='column'>
-                        <h2>Past Events</h2>
-                            {past.length === 0 && <p>No past events.</p>}
-                            <ul>
-                                {past.map(event => (
-                                    <li key={event.event_no}>
-                                    <strong>{event.name}</strong> — {new Date(event.date).toLocaleDateString()}
-                                    <button className="details" onClick={() => toggleDetails(event.event_no)}>
-                                        {openEventId === event.event_no ? 'Hide Details' : 'Details'}
-                                    </button>
-                                    
-                                    {openEventId === event.event_no && (
-                                        <div className="accordion-content">
-                                            <p><strong>Description:</strong> {event.description || 'N/A'}</p>
-                                            <p><strong>Track:</strong> {event.track || 'N/A'}</p>
-                                            <p><strong>Points:</strong> {event.points ?? 'N/A'}</p>
-                                            <button onClick={() => getAttendeeList(event.event_no)}>View Attendee List</button>
-                                            {showAttendeeList && (
-                                                <AttendeeList attendeeList={attendeeList}/>
-                                            )}
-                                        </div>
-                                    )}
-                                    </li>
-                                ))}
-                            </ul>
-                    </div>
+                    <h2>Upcoming Events</h2>
+                        {upcoming.length === 0 && <p>No upcoming events.</p>}
+                        <ul>
+                            {upcoming.map(event => (
+                                <li key={event.event_no}>
+                                <strong>{event.name}</strong> — {new Date(event.date).toLocaleDateString()}
+                                <button className="details" onClick={() => toggleDetails(event.event_no)}>
+                                    {openEventId === event.event_no ? 'Hide Details' : 'Details'}
+                                </button>
+                                
+                                {openEventId === event.event_no && (
+                                    <div className="accordion-content">
+                                        <p><strong>Description:</strong> {event.description || 'N/A'}</p>
+                                        <p><strong>Track:</strong> {event.track || 'N/A'}</p>
+                                        <p><strong>Points:</strong> {event.points ?? 'N/A'}</p>
+                                        <button onClick={() => editEvent(event)}>Edit</button>
+                                        <button onClick={() => getAttendeeList(event.event_no)}>View Attendee List</button>
+                                        {showAttendeeList && (
+                                            <AttendeeList attendeeList={attendeeList}/>
+                                        )}
+                                    </div>
+                                )}
+                                
+                                </li>
+                            ))}
+                        </ul>
+                </div>
+                <div className='column'>
+                    <h2>Past Events</h2>
+                        {past.length === 0 && <p>No past events.</p>}
+                        <ul>
+                            {past.map(event => (
+                                <li key={event.event_no}>
+                                <strong>{event.name}</strong> — {new Date(event.date).toLocaleDateString()}
+                                <button className="details" onClick={() => toggleDetails(event.event_no)}>
+                                    {openEventId === event.event_no ? 'Hide Details' : 'Details'}
+                                </button>
+                                
+                                {openEventId === event.event_no && (
+                                    <div className="accordion-content">
+                                        <p><strong>Description:</strong> {event.description || 'N/A'}</p>
+                                        <p><strong>Track:</strong> {event.track || 'N/A'}</p>
+                                        <p><strong>Points:</strong> {event.points ?? 'N/A'}</p>
+                                        <button onClick={() => getAttendeeList(event.event_no)}>View Attendee List</button>
+                                        {showAttendeeList && (
+                                            <AttendeeList attendeeList={attendeeList}/>
+                                        )}
+                                    </div>
+                                )}
+                                </li>
+                            ))}
+                        </ul>
                 </div>
             </div>
+        </div>
         </>
     );
 }

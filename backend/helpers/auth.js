@@ -35,4 +35,22 @@ const generateAccessToken = (student_id) => {
     return jwt.sign({ student_id }, 'jwtSecret', { expiresIn: '30m' }); //We need to define this secret as something else usually a 64 hex code or smth
 }
 
-module.exports = {queryDBCredentials, addDBCredentials, generateRefreshToken, generateAccessToken}
+const checkAdminAccess = async (req, res, next) => {
+    try {
+        const [rows] = await db.execute(
+            `SELECT is_admin FROM student WHERE student_id = ?`,
+            [req.userID]
+        );
+
+        if (rows[0]?.is_admin) {
+            return next();
+        } else {
+            return res.status(403).json({ message: 'Admin access required' });
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Error checking admin status', error: err });
+    }
+};
+
+module.exports = {queryDBCredentials, addDBCredentials, generateRefreshToken, generateAccessToken, checkAdminAccess}
