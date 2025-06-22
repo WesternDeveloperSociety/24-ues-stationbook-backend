@@ -1,0 +1,28 @@
+POST /api/auth/register 
+POST /api/auth/login
+POST /api/auth/returnAccessToken
+POST /api/auth/isUserAuth
+
+GET /api/events/getEvents
+POST /api/events/createEvent
+GET /api/events/past
+GET /api/events/upcoming 
+POST /api/events/edit/:event_no
+
+GET /api/scan/event-scans/:event_no
+GET /api/scan/student-scans/:student_id
+POST /api/scan/create-scan
+
+POST /api/conductor/create-request
+GET /api/conductor/requests       
+GET /api/conductor/requests/all           
+
+POST /api/conductor/grant
+POST /api/conductor/deny
+POST /api/conductor/remove
+GET /api/conductor/get
+GET /api/conductor/get-active-conductors
+
+
+
+to implement:
