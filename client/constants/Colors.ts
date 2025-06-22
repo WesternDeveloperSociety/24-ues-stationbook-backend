@@ -8,7 +8,8 @@ const tintColorDark = '#fff';
 
 export const Colors = {
 	black: '#000000',
-	white: "#ffffff",
+	white: '#ffffff',
+	purple: '#4F2683',
 	offBlack: '#161a21',
 	offWhite: '#e7e6eb',
 	gray: '#666569',
