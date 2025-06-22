@@ -3,8 +3,8 @@ const mysql = require('mysql2');
 // Create a connection pool
 const pool = mysql.createPool({
   host: 'localhost',
-  user: 'mysql',
-  password: 'password',
+  user: 'root',
+  password: 'monthdayyear1Y',
   database: 'ues_stationbook',
   waitForConnections: true,
   connectionLimit: 10,

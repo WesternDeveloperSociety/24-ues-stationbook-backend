@@ -15,14 +15,28 @@ CREATE TABLE student (
     last_updated		TIMESTAMP DEFAULT current_timestamp ON UPDATE current_timestamp
 );
 
-CREATE TABLE conductor_access (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE conductor_request (
+	request_id INT AUTO_INCREMENT PRIMARY KEY,
     student_id INT(10) NOT NULL,
-    granted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    expires_at TIMESTAMP NOT NULL,
+    requested_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
+    event_no INT(10) NOT NULL,
+    FOREIGN KEY (event_no) REFERENCES event(event_no) ON DELETE CASCADE,
     FOREIGN KEY (student_id) REFERENCES student(student_id) ON DELETE CASCADE
 );
 
+CREATE TABLE conductor_access (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    request_id INT(10) NOT NULL,
+    student_id INT(10) NOT NULL,
+    event_no INT(10) NOT NULL,
+    granted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES student(student_id) ON DELETE CASCADE,
+    FOREIGN KEY (request_id) REFERENCES conductor_request(request_id) ON DELETE CASCADE,
+    FOREIGN KEY (event_no) REFERENCES event(event_no) ON DELETE CASCADE
+);
     
 CREATE TABLE event (
 	event_no		INT(10) UNIQUE NOT NULL PRIMARY KEY,
