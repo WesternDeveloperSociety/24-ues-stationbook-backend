@@ -4,7 +4,7 @@ import Layout from './features/layout/Layout'
 import Dashboard from './pages/Dashboard'
 import Events from './pages/Events'
 import Conductors from './pages/Conductors'
-
+import Tracks from './pages/Tracks'
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="events" element={<Events />} />
           <Route path="conductors" element={<Conductors />} />
+          <Route path="tracks" element={<Tracks />} /> 
         </Route>
       </Routes>
     </>

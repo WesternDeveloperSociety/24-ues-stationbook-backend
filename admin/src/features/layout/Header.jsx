@@ -11,6 +11,7 @@ function Header() {
             <button onClick={() => navigate('./')}>Dashboard</button>
             <button onClick={() => navigate('./events')}>Events</button>
             <button onClick={() => navigate('./conductors')}>Conductors</button>
+             <button onClick={() => navigate('./tracks')}>Tracks</button>
         </nav>
       </header>
     );
