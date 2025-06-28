@@ -39,7 +39,6 @@ function Conductors() {
             <h2>Incoming Conductor Requests</h2>
             <ul></ul>
           </div>
-
           <div className="column">
             <h2>Active Conductors</h2>
             <ul></ul>

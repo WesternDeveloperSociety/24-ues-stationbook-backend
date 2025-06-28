@@ -46,6 +46,22 @@ main {
   color: #48287c;
 }
 
+.add-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #48287c;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  margin-left: 20px;
+}
+
+.upcoming {
+  display: flex;
+  flex-direction: column;
+}
+
 .upcoming {
   display: flex;
   flex-direction: column;
@@ -103,6 +119,3 @@ li {
   text-align: left;
   margin: 0.5rem 0;
 }
-
-
-
