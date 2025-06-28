@@ -26,3 +26,11 @@ GET /api/conductor/get-active-conductors
 
 
 to implement:
+- Get tracks
+- Get stations for track
+- Get station info
+- Create track
+- Create station on track
+- Update station info
+- Update/Delete station on track
+- Update/Delete track
