@@ -49,6 +49,7 @@ exports.getPastEvents = async (req, res) => {
 
 exports.createEvent = async (req, res) => {
   const { name, date, description, image, points, track } = req.body;
+  console.log(req.body);
 
   if (!name) return res.status(400).json({ message: 'Event name is required' });
 
@@ -56,7 +57,7 @@ exports.createEvent = async (req, res) => {
     const event_no = await getUniqueEventNo();
 
     const [result] = await db.execute(
-      `INSERT INTO event (event_no, name, date, description, image, points, track)
+      `INSERT INTO event (event_no, name, date, description, image, points, track_name)
        VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         event_no,
@@ -109,5 +110,35 @@ exports.editEvent = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'DB update error', error: err });
+  }
+};
+
+exports.getEventsByTrack = async (req, res) => {
+  const { track_name } = req.params;
+
+    try {
+        const [rows] = await db.execute(
+            'SELECT * FROM event WHERE track_name = ?',
+            [track_name]
+        );
+        res.json(rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error fetching events for track', error: err });
+    }
+};
+
+exports.getEventInfo = async (req, res) => {
+  const { event_no } = req.params;
+
+  try {
+    const [rows] = await db.execute(
+      `SELECT * FROM event WHERE event_no = ?`,
+      [event_no]
+    );
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching event information', error: err });
   }
 };
