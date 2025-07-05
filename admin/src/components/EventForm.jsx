@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import './EventForm.css';
 
 function EventForm({ onClose, onSubmit, initialData = {} }) {
+    const [tracks, setTracks] = useState([]);
     const [formData, setFormData] = useState({
         name: initialData.name || '',
         date: initialData.date
@@ -37,6 +39,18 @@ function EventForm({ onClose, onSubmit, initialData = {} }) {
         }
     };
 
+    useEffect(() => {
+        const fetchTracks = async () => {
+            try {
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/tracks`);
+                setTracks(res.data);
+            } catch (err) {
+                console.error('Error fetching tracks:', err);
+            }
+        };
+        fetchTracks();
+    }, []);
+
     
     return(
         <>
@@ -66,7 +80,14 @@ function EventForm({ onClose, onSubmit, initialData = {} }) {
                         </label>
                         <label>
                             Track:
-                            <input type="text" name="track" value={formData.track} onChange={handleChange} />
+                            <select name="track" value={formData.track} onChange={handleChange} required>
+                                <option value="" disabled>Select a Track</option>
+                                {tracks.map((track) => (
+                                    <option key={track.track_name} value={track.track_name}>
+                                        {track.track_name}
+                                    </option>
+                                ))}
+                            </select>
                         </label>
                         <button type="submit">Submit</button>
                         <button onClick={onClose}>Close</button>

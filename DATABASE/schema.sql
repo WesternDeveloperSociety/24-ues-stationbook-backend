@@ -15,6 +15,21 @@ CREATE TABLE student (
     last_updated		TIMESTAMP DEFAULT current_timestamp ON UPDATE current_timestamp
 );
 
+CREATE TABLE track (
+	track_name		VARCHAR(40) UNIQUE NOT NULL PRIMARY KEY
+);
+    
+CREATE TABLE event (
+	event_no		INT(10) UNIQUE NOT NULL PRIMARY KEY,
+    name			VARCHAR(20) NOT NULL,
+    date			DATE,
+    description		VARCHAR(200),
+    image			BLOB,
+    points			INT(5),
+    track_name			VARCHAR(40),
+    FOREIGN KEY (track_name) REFERENCES track(track_name)
+);
+
 CREATE TABLE conductor_request (
 	request_id INT AUTO_INCREMENT PRIMARY KEY,
     student_id INT(10) NOT NULL,
@@ -37,16 +52,6 @@ CREATE TABLE conductor_access (
     FOREIGN KEY (request_id) REFERENCES conductor_request(request_id) ON DELETE CASCADE,
     FOREIGN KEY (event_no) REFERENCES event(event_no) ON DELETE CASCADE
 );
-    
-CREATE TABLE event (
-	event_no		INT(10) UNIQUE NOT NULL PRIMARY KEY,
-    name			VARCHAR(20) NOT NULL,
-    date			DATE,
-    description		VARCHAR(200),
-    image			BLOB,
-    points			INT(5),
-    track			VARCHAR(40)
-);
 
 CREATE TABLE scan (
 	student_id  INT(10) NOT NULL,
@@ -56,6 +61,7 @@ CREATE TABLE scan (
     FOREIGN KEY (student_id) REFERENCES student(student_id) ON DELETE CASCADE,
     FOREIGN KEY (event_no) REFERENCES event(event_no) ON DELETE CASCADE
 );
+
 
 
 

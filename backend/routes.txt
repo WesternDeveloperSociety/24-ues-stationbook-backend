@@ -4,10 +4,18 @@ POST /api/auth/returnAccessToken
 POST /api/auth/isUserAuth
 
 GET /api/events/getEvents
-POST /api/events/createEvent
+GET /api/events/:event_no - Get station info
+POST /api/events/createEvent - Create station on track 
 GET /api/events/past
 GET /api/events/upcoming 
-POST /api/events/edit/:event_no
+POST /api/events/edit/:event_no - Update station info
+
+GET /api/events/track/:track_name - Get stations for track
+
+GET /api/tracks
+POST /api/tracks/create-track
+PUT /api/tracks/update
+
 
 GET /api/scan/event-scans/:event_no
 GET /api/scan/student-scans/:student_id
@@ -25,12 +33,7 @@ GET /api/conductor/get-active-conductors
 
 
 
+
+
+
 to implement:
-- Get tracks
-- Get stations for track
-- Get station info
-- Create track
-- Create station on track
-- Update station info
-- Update/Delete station on track
-- Update/Delete track

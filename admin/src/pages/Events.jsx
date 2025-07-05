@@ -131,7 +131,7 @@ function Events() {
                                 {openEventId === event.event_no && (
                                     <div className="accordion-content">
                                         <p><strong>Description:</strong> {event.description || 'N/A'}</p>
-                                        <p><strong>Track:</strong> {event.track || 'N/A'}</p>
+                                        <p><strong>Track:</strong> {event.track_name || 'N/A'}</p>
                                         <p><strong>Points:</strong> {event.points ?? 'N/A'}</p>
                                         <button onClick={() => editEvent(event)}>Edit</button>
                                         <button onClick={() => getAttendeeList(event.event_no)}>View Attendee List</button>
@@ -159,7 +159,7 @@ function Events() {
                                 {openEventId === event.event_no && (
                                     <div className="accordion-content">
                                         <p><strong>Description:</strong> {event.description || 'N/A'}</p>
-                                        <p><strong>Track:</strong> {event.track || 'N/A'}</p>
+                                        <p><strong>Track:</strong> {event.track_name || 'N/A'}</p>
                                         <p><strong>Points:</strong> {event.points ?? 'N/A'}</p>
                                         <button onClick={() => getAttendeeList(event.event_no)}>View Attendee List</button>
                                         {showAttendeeList && (

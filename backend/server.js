@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRoutes.js');
 const eventsRoutes = require('./routes/eventsRoutes');
 const scanRoutes = require('./routes/scanRoutes.js');
 const conductorRoutes = require('./routes/conductorRoutes.js');
+const trackRoutes = require('./routes/trackRoutes.js');
 
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
@@ -27,6 +28,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/events', eventsRoutes);
 app.use('/api/scan', scanRoutes);
 app.use('/api/conductor', conductorRoutes);
+app.use('/api/tracks', trackRoutes);
 
 
 
